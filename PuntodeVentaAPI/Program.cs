@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.SpaServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -51,11 +50,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseSpa(builder => {
-    builder.Options.SourcePath = "PuntodeVenta.UI";
-    builder.UseAngularCliServer(npmScript: "serve");
-});
 
 app.UseHttpsRedirection();
 

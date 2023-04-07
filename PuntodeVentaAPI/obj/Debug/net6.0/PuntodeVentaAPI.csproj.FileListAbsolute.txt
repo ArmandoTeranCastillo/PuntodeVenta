@@ -294,3 +294,5 @@ C:\Users\Lenovo\Desktop\Portafolio\PuntodeVenta\PuntodeVentaAPI\bin\Debug\net6.0
 C:\Users\Lenovo\Desktop\Portafolio\PuntodeVenta\PuntodeVentaAPI\bin\Debug\net6.0\Scrutor.dll
 C:\Users\Lenovo\Desktop\Portafolio\PuntodeVenta\PuntodeVentaAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.dll
 C:\Users\Lenovo\Desktop\Portafolio\PuntodeVenta\PuntodeVentaAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
+C:\Users\Lenovo\Desktop\Portafolio\PuntodeVenta\PuntodeVentaAPI\bin\Debug\net6.0\Microsoft.AspNetCore.NodeServices.dll
+C:\Users\Lenovo\Desktop\Portafolio\PuntodeVenta\PuntodeVentaAPI\bin\Debug\net6.0\Microsoft.AspNetCore.SpaServices.dll
