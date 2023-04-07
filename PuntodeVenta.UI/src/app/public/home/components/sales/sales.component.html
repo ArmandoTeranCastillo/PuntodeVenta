@@ -1,0 +1,151 @@
+<div class="long-title">
+  <h3>Tabla de Ventas</h3>
+</div>
+
+<div #gridContainer style="height: 300px">
+  <dx-button
+    text="Cierre Parcial"
+    type="default"
+    (onClick)="getPartialClosure($event)"
+  >
+  </dx-button>
+  <dx-button
+    text="Cierre Total"
+    type="default"
+    (onClick)="getTotalClosure($event)"
+  >
+  </dx-button>
+  <dx-data-grid
+    #dataGrid
+    id="dataGrid"
+    [dataSource]="sales"
+    keyExpr="id"
+    [allowColumnReordering]="false"
+    [allowColumnResizing]="true"
+    [columnAutoWidth]="true"
+    [showBorders]="true"
+    style="background-color: aqua"
+    (onRowInserted)="createSale($event)"
+    (onRowUpdated)="updateSale($event)"
+    (onRowRemoved)="deleteSale($event)"
+  >
+    <dxo-export [enabled]="true" [formats]="['xlsx', 'pdf']"> </dxo-export>
+    <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+    <dxo-filter-row [visible]="true"></dxo-filter-row>
+    <dxo-search-panel [visible]="true"></dxo-search-panel>
+    <dxo-group-panel [visible]="true"></dxo-group-panel>
+    <dxo-scrolling rowRenderingMode="virtual"> </dxo-scrolling>
+    <dxo-paging [pageSize]="10"> </dxo-paging>
+    <dxo-pager
+      [visible]="true"
+      [allowedPageSizes]="allowedPageSizes"
+      [displayMode]="displayMode"
+      [showPageSizeSelector]="showPageSizeSelector"
+      [showInfo]="showInfo"
+      [showNavigationButtons]="showNavButtons"
+    >
+    </dxo-pager>
+    <dxi-column
+      dataField="id"
+      caption="Venta No."
+      fixed="true"
+      [allowEditing]="false"
+    >
+    </dxi-column>
+    <dxi-column dataField="inventory.id" caption="Producto" fixed="true">
+      <dxo-lookup
+        [dataSource]="inventory"
+        valueExpr="id"
+        displayExpr="product.name"
+      ></dxo-lookup>
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column
+      dataField="quantitySold"
+      caption="Cantidad Vendida"
+      fixed="true"
+    >
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="inventory.id" caption="Costo Unitario" fixed="true">
+      <dxo-lookup
+        [dataSource]="inventory"
+        valueExpr="id"
+        displayExpr="product.unitCost"
+      ></dxo-lookup>
+    </dxi-column>
+    <dxi-column
+      dataField="date"
+      caption="Fecha de Venta"
+      fixed="true"
+      dataType="date"
+    >
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="registered" caption="Registrado?" fixed="true">
+    </dxi-column>
+
+    <dxo-summary>
+      <dxi-total-item column="quantitySold" summaryType="sum"> </dxi-total-item>
+    </dxo-summary>
+
+    <dxo-editing
+      mode="popup"
+      [allowUpdating]="true"
+      [allowAdding]="true"
+      [allowDeleting]="true"
+      [confirmDelete]="true"
+    >
+      <dxo-form [formData]="inventory">
+        <dxo-popup title="Editar" [showTitle]="true"> </dxo-popup>
+        <dxi-item
+          itemType="group"
+          colCount="2"
+          colSpan="2"
+          caption="Editar Ventas"
+        >
+          <dxi-item dataField="inventory.id">
+            <dxo-lookup
+              [dataSource]="inventory"
+              valueExpr="id"
+              displayExpr="id.product.name"
+            >
+            </dxo-lookup>
+          </dxi-item>
+          <dxi-item dataField="quantitySold"></dxi-item>
+        </dxi-item>
+      </dxo-form>
+    </dxo-editing>
+  </dx-data-grid>
+</div>
+
+<div>
+  <dx-popup
+    [(visible)]="popupVisible"
+    [dragEnabled]="true"
+    [closeOnOutsideClick]="true"
+    [showTitle]="true"
+    title="Cierre de Caja"
+    [width]="700"
+    [height]="500"
+    (onHiding)="onPopupHidden()"
+  >
+    <!-- Aquí colocas el contenido que quieres mostrar en el popup -->
+    <dx-data-grid [dataSource]="partialClosure" keyExpr="id">
+      <dxi-column dataField="id" caption="ID"> </dxi-column>
+      <dxi-column dataField="product.name" caption="Producto"> </dxi-column>
+      <dxi-column dataField="quantitySold" caption="Cantidad Vendida">
+      </dxi-column>
+      <dxi-column dataField="totalSale" caption="Total de Venta"> </dxi-column>
+
+      <dxo-summary>
+        <dxi-total-item column="quantitySold" summaryType="sum">
+        </dxi-total-item>
+        <dxi-total-item column="totalSale" summaryType="sum"> </dxi-total-item>
+      </dxo-summary>
+    </dx-data-grid>
+
+    <!-- Aquí colocas el botón para cerrar el popup -->
+    <button (click)="closePopup()">Cerrar</button>
+  </dx-popup>
+</div>

@@ -1,0 +1,37 @@
+Productos (Solo servira como una tabla de informacion)
+- IdProducto 
+- Nombre 
+- Descripcion
+- Costo Unitario
+
+Inventario 
+- IdInventario
+- IdProducto - LlaveForanea
+- Cantidad Disponible | Vista
+
+Ventas 
+- IdVenta
+- IdInventario - LLave foranea
+- Cantidad Vendida
+- Fecha de Venta
+- Registrado (Boolean)
+
+
+Cierre Parcial - Se registrara mediante consultas
+- IdCierreParcial
+- Fecha de Cierre
+- IdProducto - LLave Foranea
+- Cantidad Vendida
+- Venta Total
+- Cerrado (Boolean)
+
+
+Cierre Final - Se registrara mediante consultas
+- IdCierreFinal
+- Fecha de Cierre
+- IdProducto - LLave Foranea
+- Cantidad Vendida
+- Venta Total
+
+
+

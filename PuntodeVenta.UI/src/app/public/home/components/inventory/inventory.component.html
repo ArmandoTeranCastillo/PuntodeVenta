@@ -1,0 +1,92 @@
+<div class="long-title">
+  <h3>Tabla de Inventario</h3>
+</div>
+
+<div #gridContainer style="height: 300px">
+  <dx-data-grid
+    #dataGrid
+    id="dataGrid"
+    [dataSource]="inventory"
+    keyExpr="id"
+    [allowColumnReordering]="false"
+    [allowColumnResizing]="true"
+    [columnAutoWidth]="true"
+    [showBorders]="true"
+    (onRowInserted)="createInventory($event)"
+    (onRowUpdated)="updateInventory($event)"
+    (onRowRemoved)="deleteInventory($event)"
+    style="background-color: aqua"
+  >
+    <dxo-export [enabled]="true" [formats]="['xlsx', 'pdf']"> </dxo-export>
+    <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+    <dxo-filter-row [visible]="true"></dxo-filter-row>
+    <dxo-search-panel [visible]="true"></dxo-search-panel>
+    <dxo-group-panel [visible]="true"></dxo-group-panel>
+    <dxo-scrolling rowRenderingMode="virtual"> </dxo-scrolling>
+    <dxo-paging [pageSize]="10"> </dxo-paging>
+    <dxo-pager
+      [visible]="true"
+      [allowedPageSizes]="allowedPageSizes"
+      [displayMode]="displayMode"
+      [showPageSizeSelector]="showPageSizeSelector"
+      [showInfo]="showInfo"
+      [showNavigationButtons]="showNavButtons"
+    >
+    </dxo-pager>
+    <dxi-column
+      dataField="id"
+      caption="Registro"
+      fixed="true"
+      [allowEditing]="false"
+    >
+    </dxi-column>
+    <dxi-column dataField="product.id" caption="Producto" fixed="true">
+      <dxo-lookup
+        [dataSource]="products"
+        valueExpr="id"
+        displayExpr="name"
+      ></dxo-lookup>
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column
+      dataField="quantity"
+      caption="Cantidad"
+      fixed="true"
+      [calculateDisplayValue]="getRealQuantity"
+    >
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+
+    <dxo-summary>
+      <dxi-total-item column="quantity" summaryType="sum"> </dxi-total-item>
+    </dxo-summary>
+
+    <dxo-editing
+      mode="popup"
+      [allowUpdating]="true"
+      [allowAdding]="true"
+      [allowDeleting]="true"
+      [confirmDelete]="true"
+    >
+      <dxo-form [formData]="inventory">
+        <dxo-popup title="Editar" [showTitle]="true"> </dxo-popup>
+        <dxi-item
+          itemType="group"
+          colCount="2"
+          colSpan="2"
+          caption="Editar Inventario"
+        >
+          <dxi-item dataField="product.id">
+            <dxo-lookup
+              [dataSource]="products"
+              valueExpr="id"
+              displayExpr="Name"
+            >
+            </dxo-lookup>
+          </dxi-item>
+          <dxi-item dataField="realQuantity"></dxi-item>
+        </dxi-item>
+      </dxo-form>
+    </dxo-editing>
+  </dx-data-grid>
+</div>
